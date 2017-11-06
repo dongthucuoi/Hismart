@@ -63,9 +63,11 @@
 
             <TextView
                 android:id="@+id/tenMon"
+                android:textColor="#0033ff"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="thit ga" />
@@ -80,7 +82,7 @@
                 android:id="@+id/giaMon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:gravity="center"
                 android:text="thit bo"
                 android:textColor="#f12"

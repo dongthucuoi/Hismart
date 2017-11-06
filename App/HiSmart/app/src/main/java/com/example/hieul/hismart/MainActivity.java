@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
-                Toast.makeText(this, latitude + " " + longitude , Toast.LENGTH_SHORT).show();
+
             }
         }
     }
@@ -263,14 +263,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                                     Endpoint.setLatitude(Float.parseFloat(kinhdojon));
                                     Endpoint.setLongitude(Float.parseFloat(vidojson));
                                     distance = Startpoint.distanceTo(Endpoint);
-                                    Toast.makeText(MainActivity.this, String.valueOf(distance), Toast.LENGTH_SHORT).show();
+
                                     if ((distance <= 100) && (distance > 0)) {
 
                                         Intent ii = new Intent(MainActivity.this, BookActivity.class);
                                         startActivity(ii);
                                         finish();
                                     } else {
-                                        Toast.makeText(MainActivity.this, "Bạn phải đến cửa hàng để gọi món!" + distance, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MainActivity.this, "Bạn phải đến cửa hàng để gọi món!" , Toast.LENGTH_LONG).show();
                                     }
 
                                 }

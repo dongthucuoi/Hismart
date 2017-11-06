@@ -31,4 +31,13 @@ public class Db extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
+
+
+    public void delete_order(String table_name, String id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from " + table_name + " where ID_book ='" + id + "'");
+
+
+
+    }
 }

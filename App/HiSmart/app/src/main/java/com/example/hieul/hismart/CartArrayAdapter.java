@@ -11,9 +11,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.net.MalformedURLException;
+import com.squareup.picasso.Picasso;
+
 import java.net.URL;
 import java.util.List;
 
@@ -46,23 +46,10 @@ public class CartArrayAdapter extends ArrayAdapter<CartGetSetListView> {
 
         ImageButton imgDel = (ImageButton) convertView.findViewById(R.id.Del);
         TextView gia = (TextView) convertView.findViewById(R.id.giaMon);
-        gia.setText(cart.getGia());
+        gia.setText("Giá: " + cart.getGia() + " vnđ");
 
 
-        try {
-            url = new URL(cart.getImgurlmon());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-
-        Toast.makeText(context, cart.getImgurlmon(), Toast.LENGTH_SHORT).show();
-//        try {
-////            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        imgMon.setImageBitmap(bmp);
+        Picasso.with(getContext()).load(cart.getImgurlmon()).fit().into(imgMon);
 
 
         String uri1 = "drawable/" + cart.getImgdel();
@@ -73,5 +60,8 @@ public class CartArrayAdapter extends ArrayAdapter<CartGetSetListView> {
 
         return convertView;
     }
+
+
+
 }
 

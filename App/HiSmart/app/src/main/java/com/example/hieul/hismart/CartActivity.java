@@ -40,20 +40,76 @@ public class CartActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cart);
 
-        this.setFinishOnTouchOutside(false);
+        this.setFinishOnTouchOutside(true);
 
         thanhtoan = (Button) findViewById(R.id.thanhtoan);
         goimon = (Button) findViewById(R.id.goimon);
 
 //        if (tt_thanhtoan) {
-        thanhtoan.setEnabled(false);
-        goimon.setEnabled(false);
+//        thanhtoan.setEnabled(false);
+//        goimon.setEnabled(false);
 //        } else {
 //            thanhtoan.setEnabled(true);
 //            goimon.setEnabled(true);
 //        }
 
         setContentView(R.layout.activity_cart);
+        // load data from table order
+        load_cart();
+
+        listViewMon = (ListView) findViewById(R.id.lvmon);
+        listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
+
+        // Click event for single list row
+
+
+        listViewMon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public String variable;
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                CartGetSetListView o = (CartGetSetListView) adapterView.getItemAtPosition(position);
+                variable = o.getTenmon().toString();
+
+                //Toast.makeText(CartActivity.this, variable + "" + position, Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                        CartActivity.this);
+                // Setting Dialog Title
+                alertDialog.setTitle("XÓA MÓN");
+                // Setting Dialog Message
+                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]" + " khỏi giỏ hàng?");
+                // Setting Icon to Dialog
+                alertDialog.setIcon(R.drawable.warning);
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                db.delete_order("tbl_order", String.valueOf(position + 1));
+                                Toast.makeText(CartActivity.this, "Đã xóa: " + variable, Toast.LENGTH_SHORT).show();
+                               // load_cart();
+                            }
+                        });
+
+                // Showing Alert Message
+                alertDialog.show();
+
+
+            }
+
+
+        });
+//
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    public void load_cart() {
+
 
         ctx = this;
         db.querydata("Create table if not exists tbl_order (ID_book integer primary key, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
@@ -90,63 +146,13 @@ public class CartActivity extends AppCompatActivity {
             }
         }
 
-        for (int i = 0; i < cc; i++){
+        for (int i = 0; i < cc; i++) {
 
             listtao.add(new CartGetSetListView(ArrImgUrl.get(i), ArrTenmon.get(i), ArrGia.get(i), "delete1"));
 
         }
-
-
-
-//        listtao.add(new CartGetSetListView("album1", "ốc xào me", "Giá: 150.000", "delete1"));
-//        listtao.add(new CartGetSetListView("album2", "gà hấp muối hột", "Giá: 150.000", "delete1"));
-//        listtao.add(new CartGetSetListView("album3", "cút quay", "Giá: 150.000", "delete1"));
-//        listtao.add(new CartGetSetListView("album4", "baba xào lăn", "Giá: 150.000", "delete1"));
-//        listtao.add(new CartGetSetListView("album5", "cháo trai", "Giá: 150.000", "delete1"));
-//        listtao.add(new CartGetSetListView("album6", "gà quay tiêu chanh", "Giá: 150.000", "delete1"));
-
-        listViewMon = (ListView) findViewById(R.id.lvmon);
-        listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
-
-        // Click event for single list row
-
-
-        listViewMon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public String variable;
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-                CartGetSetListView o = (CartGetSetListView) adapterView.getItemAtPosition(position);
-                variable = o.getTenmon().toString();
-
-                //Toast.makeText(CartActivity.this, variable + "" + position, Toast.LENGTH_SHORT).show();
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                        CartActivity.this);
-                // Setting Dialog Title
-                alertDialog.setTitle("XÓA MÓN");
-                // Setting Dialog Message
-                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]" + " khỏi giỏ hàng?");
-                // Setting Icon to Dialog
-                alertDialog.setIcon(R.drawable.warning);
-                // Setting Positive "Yes" Button
-                alertDialog.setPositiveButton("YES",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Toast.makeText(CartActivity.this, "Đã xóa: " + variable, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                // Showing Alert Message
-                alertDialog.show();
-
-
-            }
-
-
-        });
-//
+        curs.close();
+        db.close();
     }
 
 }

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:clickable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+
+
+    android:orientation="horizontal"
+    android:weightSum="10"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="3"
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:touchscreenBlocksFocus="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+
+        >
+
+        <ImageView
+
+            android:id="@+id/imgMon"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:focusedByDefault="true"
+            android:scaleType="centerInside"
+            android:touchscreenBlocksFocus="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="6"
+        android:focusable="true"
+        android:orientation="vertical"
+
+        android:padding="2dp"
+
+        android:weightSum="10">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+            <TextView
+                android:id="@+id/tenMon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="thit ga" />
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+            <TextView
+                android:id="@+id/giaMon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="thit bo"
+                android:textColor="#f12"
+                android:textStyle="bold" />
+
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:paddingRight="5dp">
+
+        <ImageButton
+
+            android:id="@+id/Del"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/delete1"
+
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+
+
+</LinearLayout>
+

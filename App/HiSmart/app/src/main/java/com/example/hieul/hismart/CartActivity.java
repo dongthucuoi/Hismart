@@ -3,6 +3,7 @@ package com.example.hieul.hismart;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,6 +24,14 @@ public class CartActivity extends AppCompatActivity {
     final static boolean tt_thanhtoan = true;
     public ListView listViewMon;
     private Context ctx;
+    Db db = new Db(this);
+    List<String> ArrTenmon = new ArrayList<String>();
+    List<String> ArrGia = new ArrayList<String>();
+    List<String> ArrImgLocal = new ArrayList<String>();
+    List<String> ArrImgUrl = new ArrayList<String>();
+    List<String> ArrIDMon = new ArrayList<String>();
+    List<String> ArrIDTable = new ArrayList<String>();
+    List<CartGetSetListView> listtao = new ArrayList<CartGetSetListView>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +40,14 @@ public class CartActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cart);
 
-        this.setFinishOnTouchOutside(true);
+        this.setFinishOnTouchOutside(false);
 
         thanhtoan = (Button) findViewById(R.id.thanhtoan);
         goimon = (Button) findViewById(R.id.goimon);
 
 //        if (tt_thanhtoan) {
-            thanhtoan.setEnabled(false);
-            goimon.setEnabled(false);
+        thanhtoan.setEnabled(false);
+        goimon.setEnabled(false);
 //        } else {
 //            thanhtoan.setEnabled(true);
 //            goimon.setEnabled(true);
@@ -47,14 +56,54 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         ctx = this;
+        db.querydata("Create table if not exists tbl_order (ID_book integer primary key, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
+        Cursor curs = db.getdata("select * from tbl_order, tbl_mon_app where tbl_order.IDmon_book = tbl_mon_app.IDMon");
+        int cc = curs.getCount();
+        if (curs.moveToFirst()) {
 
-        List<CartGetSetListView> listtao = new ArrayList<CartGetSetListView>();
-        listtao.add(new CartGetSetListView("album1", "ốc xào me", "Giá: 150.000", "delete1"));
-        listtao.add(new CartGetSetListView("album2", "gà hấp muối hột", "Giá: 150.000", "delete1"));
-        listtao.add(new CartGetSetListView("album3", "cút quay", "Giá: 150.000", "delete1"));
-        listtao.add(new CartGetSetListView("album4", "baba xào lăn", "Giá: 150.000", "delete1"));
-        listtao.add(new CartGetSetListView("album5", "cháo trai", "Giá: 150.000", "delete1"));
-        listtao.add(new CartGetSetListView("album6", "gà quay tiêu chanh", "Giá: 150.000", "delete1"));
+            while (!curs.isAfterLast()) {
+
+                // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
+                ArrImgUrl.add(curs.getString(curs.getColumnIndex("ImgUrl")));
+                curs.moveToNext();
+
+            }
+        }
+        if (curs.moveToFirst()) {
+
+            while (!curs.isAfterLast()) {
+
+                // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
+                ArrTenmon.add(curs.getString(curs.getColumnIndex("TenMon")));
+                curs.moveToNext();
+
+            }
+        }
+        if (curs.moveToFirst()) {
+
+            while (!curs.isAfterLast()) {
+
+                // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
+                ArrGia.add(curs.getString(curs.getColumnIndex("Gia")));
+                curs.moveToNext();
+
+            }
+        }
+
+        for (int i = 0; i < cc; i++){
+
+            listtao.add(new CartGetSetListView(ArrImgUrl.get(i), ArrTenmon.get(i), ArrGia.get(i), "delete1"));
+
+        }
+
+
+
+//        listtao.add(new CartGetSetListView("album1", "ốc xào me", "Giá: 150.000", "delete1"));
+//        listtao.add(new CartGetSetListView("album2", "gà hấp muối hột", "Giá: 150.000", "delete1"));
+//        listtao.add(new CartGetSetListView("album3", "cút quay", "Giá: 150.000", "delete1"));
+//        listtao.add(new CartGetSetListView("album4", "baba xào lăn", "Giá: 150.000", "delete1"));
+//        listtao.add(new CartGetSetListView("album5", "cháo trai", "Giá: 150.000", "delete1"));
+//        listtao.add(new CartGetSetListView("album6", "gà quay tiêu chanh", "Giá: 150.000", "delete1"));
 
         listViewMon = (ListView) findViewById(R.id.lvmon);
         listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
@@ -70,14 +119,14 @@ public class CartActivity extends AppCompatActivity {
                 CartGetSetListView o = (CartGetSetListView) adapterView.getItemAtPosition(position);
                 variable = o.getTenmon().toString();
 
-                Toast.makeText(CartActivity.this, variable + "" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CartActivity.this, variable + "" + position, Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                         CartActivity.this);
                 // Setting Dialog Title
                 alertDialog.setTitle("XÓA MÓN");
                 // Setting Dialog Message
-                alertDialog.setMessage( "Bạn có muốn xóa " + "[" + variable + "]" + " khỏi giỏ hàng?");
+                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]" + " khỏi giỏ hàng?");
                 // Setting Icon to Dialog
                 alertDialog.setIcon(R.drawable.warning);
                 // Setting Positive "Yes" Button

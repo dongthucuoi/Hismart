@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Lỗi kết nối máy chủ vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Lỗi kết nối máy chủ vui lòng tắt và mở lại ứng dụng", Toast.LENGTH_SHORT).show();
                         Log.d("Lỗi", "Lỗi" + "\n" + error.toString());
                     }
                 }

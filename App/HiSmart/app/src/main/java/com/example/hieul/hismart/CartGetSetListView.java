@@ -5,9 +5,9 @@ package com.example.hieul.hismart;
  */
 
 public class CartGetSetListView {
-    public CartGetSetListView(String imgMon, String tenmon, String gia, String imgDel) {
+    public CartGetSetListView(String imgurlMon, String tenmon, String gia, String imgDel) {
         super();
-        this.imgmon = imgMon;
+        this.imgurlmon = imgurlMon;
         this.tenmon = tenmon;
         this.gia = gia;
         this.imgdel = imgDel;
@@ -15,16 +15,16 @@ public class CartGetSetListView {
 
     }
 
-    private String imgmon;
+    private String imgurlmon;
     private String tenmon;
     private String gia;
     private String imgdel;
 
-    public String getImgmon() {
-        return imgmon;
+    public String getImgurlmon() {
+        return imgurlmon;
     }
-    public void setImgmon(String imgmon) {
-        this.imgmon = imgmon;
+    public void setImgurlmon(String imgurlmon) {
+        this.imgurlmon = imgurlmon;
     }
 
     public String getTenmon() {

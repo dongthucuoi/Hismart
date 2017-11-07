@@ -35,6 +35,8 @@ public class CartArrayAdapter extends ArrayAdapter<CartGetSetListView> {
         context = ctx;
     }
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = (LinearLayout) inflater.inflate(resource, null);

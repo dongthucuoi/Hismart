@@ -24,6 +24,7 @@ public class CartActivity extends AppCompatActivity {
     final static boolean tt_thanhtoan = true;
     public ListView listViewMon;
     private Context ctx;
+    private CartArrayAdapter adapter1;
     Db db = new Db(this);
     List<String> ArrTenmon = new ArrayList<String>();
     List<String> ArrGia = new ArrayList<String>();
@@ -32,7 +33,7 @@ public class CartActivity extends AppCompatActivity {
     List<String> ArrIDMon = new ArrayList<String>();
     List<String> ArrIDTable = new ArrayList<String>();
     List<CartGetSetListView> listtao = new ArrayList<CartGetSetListView>();
-    adapter = new AlbumsAdapter(this, listao);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,24 +47,12 @@ public class CartActivity extends AppCompatActivity {
         goimon = (Button) findViewById(R.id.goimon);
         setContentView(R.layout.activity_cart);
 
-//        if (tt_thanhtoan) {
-//        thanhtoan.setEnabled(false);
-//        goimon.setEnabled(false);
-//        } else {
-//            thanhtoan.setEnabled(true);
-//            goimon.setEnabled(true);
-//        }
-
 
         // load data from table order
         load_cart();
 
         listViewMon = (ListView) findViewById(R.id.lvmon);
         listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
-
-        // Click event for single list row
-
-
         listViewMon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public String variable;
 
@@ -79,7 +68,7 @@ public class CartActivity extends AppCompatActivity {
                 // Setting Dialog Title
                 alertDialog.setTitle("XÓA MÓN");
                 // Setting Dialog Message
-                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]" + " khỏi giỏ hàng?");
+                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]" + String.valueOf(position) + " khỏi giỏ hàng?");
                 // Setting Icon to Dialog
                 alertDialog.setIcon(R.drawable.warning);
                 // Setting Positive "Yes" Button
@@ -87,13 +76,17 @@ public class CartActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                db.delete_order("tbl_order", String.valueOf(position + 1));
-                                Toast.makeText(CartActivity.this, "Đã xóa: " + variable, Toast.LENGTH_SHORT).show();
-                               // load_cart();
-
-
-
-
+                                listtao.remove(position);
+                                listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
+                                Cursor c1 = db.getdata("select * from tbl_order");
+                                c1.move(position + 1);
+                                int id = c1.getInt(c1.getColumnIndex("ID_book"));
+                                db.delete_order("tbl_order", String.valueOf(new String[]{Integer.toString(id)}));
+                                Toast.makeText(ctx, String.valueOf(id), Toast.LENGTH_LONG).show();
+                                Toast.makeText(CartActivity.this, "Đã xóa: " + variable + String.valueOf(id + 1), Toast.LENGTH_SHORT).show();
+                                c1.close();
+                                db.close();
+                                load_cart();
 
                             }
                         });

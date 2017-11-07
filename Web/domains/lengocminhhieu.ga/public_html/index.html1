@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  // window.location = 'http://stvg.vn';
+</script>
+<style>
+div.t {
+    color: Blue;
+    text-align: center;
+    font-family: "Times New Roman", Georgia, Serif;
+}
+</style>
+</head>
+<body>
+  <div class="col-md-10 col-md-offset-1 t">
+  <h2 style="font-weight:bold;font-size:50px;">"Welcome to <span id="hostname"></span>"</h2>
+  <img src="under-construction.jpg"/>
+  </div>
+<script type="text/javascript">
+  // var currentLocation = window.location;
+  // var currentLocation = window.location.pathname;
+  // var currentLocation = window.location.href;
+  var currentLocation = window.location.host;
+  document.getElementById("hostname").textContent=currentLocation;
+  document.title =currentLocation;
+</script>
+
+</body>
+</html>

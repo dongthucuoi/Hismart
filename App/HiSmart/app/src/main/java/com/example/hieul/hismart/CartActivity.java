@@ -32,7 +32,7 @@ public class CartActivity extends AppCompatActivity {
     List<String> ArrIDMon = new ArrayList<String>();
     List<String> ArrIDTable = new ArrayList<String>();
     List<CartGetSetListView> listtao = new ArrayList<CartGetSetListView>();
-
+    adapter = new AlbumsAdapter(this, listao);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class CartActivity extends AppCompatActivity {
 
         thanhtoan = (Button) findViewById(R.id.thanhtoan);
         goimon = (Button) findViewById(R.id.goimon);
+        setContentView(R.layout.activity_cart);
 
 //        if (tt_thanhtoan) {
 //        thanhtoan.setEnabled(false);
@@ -53,7 +54,7 @@ public class CartActivity extends AppCompatActivity {
 //            goimon.setEnabled(true);
 //        }
 
-        setContentView(R.layout.activity_cart);
+
         // load data from table order
         load_cart();
 
@@ -89,6 +90,11 @@ public class CartActivity extends AppCompatActivity {
                                 db.delete_order("tbl_order", String.valueOf(position + 1));
                                 Toast.makeText(CartActivity.this, "Đã xóa: " + variable, Toast.LENGTH_SHORT).show();
                                // load_cart();
+
+
+
+
+
                             }
                         });
 

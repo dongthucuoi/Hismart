@@ -13,6 +13,7 @@ public class CartGetSetListView {
         this.imgdel = imgDel;
 
 
+
     }
 
     private String imgurlmon;
@@ -20,9 +21,11 @@ public class CartGetSetListView {
     private String gia;
     private String imgdel;
 
+
     public String getImgurlmon() {
         return imgurlmon;
     }
+
     public void setImgurlmon(String imgurlmon) {
         this.imgurlmon = imgurlmon;
     }
@@ -50,4 +53,6 @@ public class CartGetSetListView {
     public void setImgdel(String imgdel) {
         this.imgdel = imgdel;
     }
+
+
 }

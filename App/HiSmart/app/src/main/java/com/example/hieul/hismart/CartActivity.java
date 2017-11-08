@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +23,14 @@ public class CartActivity extends AppCompatActivity {
     final static boolean tt_thanhtoan = true;
     public ListView listViewMon;
     private Context ctx;
-    private CartArrayAdapter adapter1;
     Db db = new Db(this);
     List<String> ArrTenmon = new ArrayList<String>();
     List<String> ArrGia = new ArrayList<String>();
-    List<String> ArrImgLocal = new ArrayList<String>();
     List<String> ArrImgUrl = new ArrayList<String>();
     List<String> ArrIDMon = new ArrayList<String>();
     List<String> ArrIDTable = new ArrayList<String>();
     List<CartGetSetListView> listtao = new ArrayList<CartGetSetListView>();
-
+    CartArrayAdapter myadapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +43,22 @@ public class CartActivity extends AppCompatActivity {
         thanhtoan = (Button) findViewById(R.id.thanhtoan);
         goimon = (Button) findViewById(R.id.goimon);
         setContentView(R.layout.activity_cart);
-
+        listViewMon = (ListView) findViewById(R.id.lvmon);
 
         // load data from table order
         load_cart();
 
-        listViewMon = (ListView) findViewById(R.id.lvmon);
-        listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
+
+        //  listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
+
+         myadapter = new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao);
+        listViewMon.setAdapter(myadapter);
+
         listViewMon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public String variable;
 
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long l) {
                 CartGetSetListView o = (CartGetSetListView) adapterView.getItemAtPosition(position);
                 variable = o.getTenmon().toString();
 
@@ -77,16 +78,16 @@ public class CartActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 listtao.remove(position);
-                                listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
-                                Cursor c1 = db.getdata("select * from tbl_order");
-                                c1.move(position + 1);
-                                int id = c1.getInt(c1.getColumnIndex("ID_book"));
-                                db.delete_order("tbl_order", String.valueOf(new String[]{Integer.toString(id)}));
-                                Toast.makeText(ctx, String.valueOf(id), Toast.LENGTH_LONG).show();
-                                Toast.makeText(CartActivity.this, "Đã xóa: " + variable + String.valueOf(id + 1), Toast.LENGTH_SHORT).show();
-                                c1.close();
-                                db.close();
-                                load_cart();
+                                myadapter.notifyDataSetChanged();
+                                int idxoa = position + 1;
+                                db.delete_order("tbl_order", String.valueOf(idxoa));
+
+                                
+//                                for (int i = 1; i <= idxoa; i++) {
+//                                    db.querydata("insert into tbl_order values('" + i + "',null, null, null, null, null )");
+//                                    db.close();
+//                                }
+                               // load_cart();
 
                             }
                         });
@@ -148,7 +149,7 @@ public class CartActivity extends AppCompatActivity {
         for (int i = 0; i < cc; i++) {
 
             listtao.add(new CartGetSetListView(ArrImgUrl.get(i), ArrTenmon.get(i), ArrGia.get(i), "delete1"));
-
+           // myadapter.setNotifyOnChange(true);
         }
         curs.close();
         db.close();

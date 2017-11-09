@@ -51,7 +51,7 @@ public class CartArrayAdapter extends ArrayAdapter<CartGetSetListView> {
         gia.setText("Giá: " + cart.getGia() + " vnđ");
 
 
-        Picasso.with(getContext()).load(cart.getImgurlmon()).fit().into(imgMon);
+        Picasso.with(getContext()).load(cart.getImgurlmon()).into(imgMon);
 
 
         String uri1 = "drawable/" + cart.getImgdel();

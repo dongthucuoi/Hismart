@@ -137,7 +137,9 @@ public class BookActivity extends AppCompatActivity {
 
 //        // lay csdl tu web
         LoadDtaWeb();
-
+        // tao bang tbl_order
+        db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp text, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
+        db.close();
     }
 
 
@@ -292,7 +294,13 @@ public class BookActivity extends AppCompatActivity {
                                     Gia = jsonObject.optString("Gia").toString();
                                     Imgurl = jsonObject.optString("ImgUrl").toString();
                                     String imgname = Imgurl.substring(Imgurl.lastIndexOf("/") + 1);
-                                    String abc = MainActivity.resultQR.getContents();
+
+//=========================================================================================================
+                                    //   String abc = MainActivity.resultQR.getContents();
+                                    //temp (
+                                    String abc = "1";
+                                    //    )temp
+
                                     Album a = new Album(abc, IDmon, Tenmon, Gia, imgname, Imgurl);
                                     albumList.add(a);
                                     adapter.notifyDataSetChanged();
@@ -323,7 +331,6 @@ public class BookActivity extends AppCompatActivity {
                                 }
 
 
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -339,7 +346,7 @@ public class BookActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
 
-       // Cursor cur = db.getdata("select * from tbl_mon_app");
+        // Cursor cur = db.getdata("select * from tbl_mon_app");
 //        if (cur.moveToFirst()) {
 //
 //            while (!cur.isAfterLast()) {
@@ -408,7 +415,7 @@ public class BookActivity extends AppCompatActivity {
 //        }
 
 
-       // cur.close();
+        // cur.close();
 
     }
 

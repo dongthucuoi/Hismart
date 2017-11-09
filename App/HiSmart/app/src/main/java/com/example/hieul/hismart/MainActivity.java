@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -48,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     TextView txtViewVitri, txtviewResult;
     String url = "http://lengocminhhieu.ga/App/KH_booking.php";
     String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-    public static IntentResult resultQR;
+    // temp resultQR
+    public static IntentResult resultQR ;
     private Location location;
     private GoogleApiClient gac;
     public double latitude, longitude;
@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         }
 //======== temp
-//        Intent ii = new Intent(MainActivity.this, BookActivity.class);
-//        startActivity(ii);
+        Intent ii = new Intent(MainActivity.this, BookActivity.class);
+        startActivity(ii);
 
 //=========temp
 
@@ -103,20 +103,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 //                }
 //            });
 //        } else {
-
-        btnScasnQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-                intentIntegrator.setPrompt(" ");
-                //intentIntegrator.setCameraId(0);  // Use a specific camera of the device
-                intentIntegrator.setBeepEnabled(true);
-                intentIntegrator.setBarcodeImageEnabled(false);
-                intentIntegrator.setOrientationLocked(true);
-                intentIntegrator.initiateScan();
+//---------------------------------------------------------
+//        btnScasnQR.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+//                intentIntegrator.setPrompt(" ");
+//                //intentIntegrator.setCameraId(0);  // Use a specific camera of the device
+//                intentIntegrator.setBeepEnabled(true);
+//                intentIntegrator.setBarcodeImageEnabled(false);
+//                intentIntegrator.setOrientationLocked(true);
+//                intentIntegrator.initiateScan();
 //
-            }
-        });
+//            }
+//        });
+//--------------------------------------------------------------------
 //        }
 
 

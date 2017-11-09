@@ -136,7 +136,7 @@ public class BookActivity extends AppCompatActivity {
 //        });
 
 //        // lay csdl tu web
-        LoadDtaWeb();
+      //  LoadDtaWeb();
         // tao bang tbl_order
         db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp text, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
         db.close();

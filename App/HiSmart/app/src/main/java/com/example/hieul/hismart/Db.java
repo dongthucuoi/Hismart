@@ -35,6 +35,6 @@ public class Db extends SQLiteOpenHelper {
 
     public void delete_order(String table_name, String id) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("delete from " + table_name + " where ID_book ='" + id + "'");
+        db.execSQL("delete from " + table_name + " where ID_temp ='" + id + "'");
     }
 }

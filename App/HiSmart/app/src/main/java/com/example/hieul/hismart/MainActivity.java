@@ -105,19 +105,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 //            });
 //        } else {
 
-            btnScasnQR.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-                    intentIntegrator.setPrompt(" ");
-                    //intentIntegrator.setCameraId(0);  // Use a specific camera of the device
-                    intentIntegrator.setBeepEnabled(true);
-                    intentIntegrator.setBarcodeImageEnabled(false);
-                    intentIntegrator.setOrientationLocked(true);
-                    intentIntegrator.initiateScan();
+        btnScasnQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+                intentIntegrator.setPrompt(" ");
+                //intentIntegrator.setCameraId(0);  // Use a specific camera of the device
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setBarcodeImageEnabled(false);
+                intentIntegrator.setOrientationLocked(true);
+                intentIntegrator.initiateScan();
 //
-                }
-            });
+            }
+        });
 //        }
 
 
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     @Override
                     public void onResponse(String response) {
 
-                        if (response.equals("{\"AREA\":[]}")) {
+                        if (response.equals("{\"AREA\":null}")) {
 
                         } else
 
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                                         startActivity(ii);
                                         finish();
                                     } else {
-                                        Toast.makeText(MainActivity.this, "Bạn phải đến cửa hàng để gọi món!" , Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MainActivity.this, "Bạn phải đến cửa hàng để gọi món!", Toast.LENGTH_LONG).show();
                                     }
 
                                 }
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Lỗi kết nối máy chủ vui lòng tắt và mở lại ứng dụng", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Lỗi kết nối máy chủ", Toast.LENGTH_SHORT).show();
                         Log.d("Lỗi", "Lỗi" + "\n" + error.toString());
                     }
                 }

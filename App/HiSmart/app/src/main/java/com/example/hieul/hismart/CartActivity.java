@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
 
-    public int count = 0;
+
     Button thanhtoan, goimon;
     final static boolean tt_thanhtoan = true;
     public ListView listViewMon;
@@ -31,6 +31,7 @@ public class CartActivity extends AppCompatActivity {
     List<String> ArrIDTable = new ArrayList<String>();
     List<CartGetSetListView> listtao = new ArrayList<CartGetSetListView>();
     CartArrayAdapter myadapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class CartActivity extends AppCompatActivity {
 
         //  listViewMon.setAdapter(new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao));
 
-         myadapter = new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao);
+        myadapter = new CartArrayAdapter(ctx, R.layout.single_list_cart, listtao);
         listViewMon.setAdapter(myadapter);
 
         listViewMon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,18 +77,24 @@ public class CartActivity extends AppCompatActivity {
                 alertDialog.setPositiveButton("YES",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
+                                Cursor c = db.getdata("select * from tbl_order");
+                                int co = c.getCount();
+                                //them gia tri ban dau cho cot ID_temp
+                                for (int j = 0; j < co; j++) {
+                                    db.querydata("insert into tbl_order values(null, '" + j + "',null, null, null, null, null )");
+                                }
+                                c.close();
                                 listtao.remove(position);
                                 myadapter.notifyDataSetChanged();
-                                int idxoa = position + 1;
-                                db.delete_order("tbl_order", String.valueOf(idxoa));
-
-                                
-//                                for (int i = 1; i <= idxoa; i++) {
-//                                    db.querydata("insert into tbl_order values('" + i + "',null, null, null, null, null )");
-//                                    db.close();
-//                                }
-                               // load_cart();
+                                db.delete_order("tbl_order", String.valueOf(position));
+                                Cursor c1 = db.getdata("select * from tbl_order");
+                                int count1 = c1.getCount();
+                                //cap nhat lai gia tri cho cot ID_Temp
+                                for (int j = 0; j < count1; j++) {
+                                    db.querydata("insert into tbl_order values(null, '" + j + "',null, null, null, null, null )");
+                                }
+                                c1.close();
+                                db.close();
 
                             }
                         });
@@ -112,7 +119,7 @@ public class CartActivity extends AppCompatActivity {
 
 
         ctx = this;
-        db.querydata("Create table if not exists tbl_order (ID_book integer primary key, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
+        db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp integer not null, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
         Cursor curs = db.getdata("select * from tbl_order, tbl_mon_app where tbl_order.IDmon_book = tbl_mon_app.IDMon");
         int cc = curs.getCount();
         if (curs.moveToFirst()) {
@@ -149,7 +156,7 @@ public class CartActivity extends AppCompatActivity {
         for (int i = 0; i < cc; i++) {
 
             listtao.add(new CartGetSetListView(ArrImgUrl.get(i), ArrTenmon.get(i), ArrGia.get(i), "delete1"));
-           // myadapter.setNotifyOnChange(true);
+            // myadapter.setNotifyOnChange(true);
         }
         curs.close();
         db.close();

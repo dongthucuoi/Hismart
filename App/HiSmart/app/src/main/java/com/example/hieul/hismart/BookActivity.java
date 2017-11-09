@@ -276,7 +276,7 @@ public class BookActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        if (response.equals("{\"DSMON\":[]}")) {
+                        if (response.equals("{\"DSMON\":null}")) {
 
                         } else
 

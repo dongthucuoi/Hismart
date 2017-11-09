@@ -2,7 +2,6 @@ package com.example.hieul.hismart;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -86,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //======================== note
 //        btnGoback.setVisibility(View.INVISIBLE);
 //
-        db.querydata("Create table if not exists tbl_order (ID_book integer primary key, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
-
-        Cursor curs = db.getdata("select * from tbl_order");
-        int co = curs.getCount();
-        curs.close();
+//        db.querydata("Create table if not exists tbl_order (ID_book integer primary key, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
+//
+//        Cursor curs = db.getdata("select * from tbl_order");
+//        int co = curs.getCount();
+//        curs.close();
 
 //        if (co > 0) {
 //
@@ -241,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     public void onResponse(String response) {
 
                         if (response.equals("{\"AREA\":null}")) {
-
+                            Toast.makeText(MainActivity.this, "kết nối mạng không ổn định", Toast.LENGTH_SHORT).show();
                         } else
 
                             try {

@@ -88,7 +88,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
 
             public void onClick(View view) {
                 Db db = new Db(view.getContext());
-                db.querydata("Create table if not exists tbl_order (ID integer primary key, ID_temp integer, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book text not null)");
+                db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp text, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book text not null)");
                 Cursor tb_or = db.getdata("select * from tbl_order");
 
                 Date currentTime = Calendar.getInstance().getTime();
@@ -99,8 +99,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
                 for (int i = 0; i <= position; i++) {
 
                     if (i == position) {
-                        db.querydata("insert into tbl_order values(null, null, '" + IDCH + "','" + alb.getId_table() + "','" + alb.getId() + "','" + "0" + "','" + currentTime.toString() + "')");
-
+                        db.querydata("insert into tbl_order values(null, null,'" + IDCH + "','" + alb.getId_table() + "','" + alb.getId() + "','" + "0" + "','" + currentTime.toString() + "')");
                         Toast.makeText(mContext, "Đã thêm " + alb.getName() + " vào giỏ hàng", Toast.LENGTH_SHORT).show();
                         break;
                     }

@@ -77,22 +77,46 @@ public class CartActivity extends AppCompatActivity {
                 alertDialog.setPositiveButton("YES",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Cursor c = db.getdata("select * from tbl_order");
-                                int co = c.getCount();
-                                //them gia tri ban dau cho cot ID_temp
-                                for (int j = 0; j < co; j++) {
-                                    db.querydata("insert into tbl_order values(null, '" + j + "',null, null, null, null, null )");
-                                }
-                                c.close();
                                 listtao.remove(position);
                                 myadapter.notifyDataSetChanged();
+
+                                //=============================
+                                Cursor c = db.getdata("select * from tbl_order");
+                                int co = c.getCount();
+                                // them gia tri ban dau cho cot ID_temp
+
+
+                                if (c.moveToFirst()) {
+                                    int j = 0;
+                                    while (!c.isAfterLast()) {
+
+                                        // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
+                                        db.querydata("update tbl_order set ID_temp= '" + j + "' where ID_ ='" + (j + 1) + "'");
+                                        c.moveToNext();
+                                        j++;
+                                    }
+                                }
+                                c.close();
+                                //===========================
+
                                 db.delete_order("tbl_order", String.valueOf(position));
                                 Cursor c1 = db.getdata("select * from tbl_order");
                                 int count1 = c1.getCount();
                                 //cap nhat lai gia tri cho cot ID_Temp
-                                for (int j = 0; j < count1; j++) {
-                                    db.querydata("insert into tbl_order values(null, '" + j + "',null, null, null, null, null )");
+
+                                if (c1.moveToFirst()) {
+                                    int n = 0;
+                                    while (!c1.isAfterLast()) {
+                                        // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
+                                        if (n > position) {
+                                            db.querydata("update tbl_order set ID_temp= '" + (n - 1) + "' where ID_temp ='" + n + "'");
+                                            c1.moveToNext();
+                                        }
+                                        n++;
+                                    }
                                 }
+
+
                                 c1.close();
                                 db.close();
 
@@ -119,7 +143,7 @@ public class CartActivity extends AppCompatActivity {
 
 
         ctx = this;
-        db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp integer not null, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
+        db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp text, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
         Cursor curs = db.getdata("select * from tbl_order, tbl_mon_app where tbl_order.IDmon_book = tbl_mon_app.IDMon");
         int cc = curs.getCount();
         if (curs.moveToFirst()) {

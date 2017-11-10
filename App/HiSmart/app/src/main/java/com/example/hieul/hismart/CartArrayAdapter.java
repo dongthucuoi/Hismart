@@ -44,7 +44,9 @@ public class CartArrayAdapter extends ArrayAdapter<CartGetSetListView> {
 
         ImageView imgMon = (ImageView) convertView.findViewById(R.id.imgMon);
         TextView tenMon = (TextView) convertView.findViewById(R.id.tenMon);
+        TextView idmon = (TextView) convertView.findViewById(R.id.idmon);
         tenMon.setText(cart.getTenmon());
+        idmon.setText(cart.getIdmon());
 
         ImageButton imgDel = (ImageButton) convertView.findViewById(R.id.Del);
         TextView gia = (TextView) convertView.findViewById(R.id.giaMon);

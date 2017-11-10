@@ -71,6 +71,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="thit ga" />
+
         </HorizontalScrollView>
 
         <HorizontalScrollView
@@ -88,7 +89,19 @@
                 android:textColor="#f12"
                 android:textStyle="bold" />
 
+        </HorizontalScrollView>
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0">
+
+            <TextView
+                android:id="@+id/idmon"
+                android:text="idmon"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </HorizontalScrollView>
 
     </LinearLayout>

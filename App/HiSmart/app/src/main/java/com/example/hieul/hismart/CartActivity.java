@@ -25,9 +25,10 @@ public class CartActivity extends AppCompatActivity {
     private Context ctx;
     Db db = new Db(this);
     List<String> ArrTenmon = new ArrayList<String>();
+    List<String> ArrIdmon = new ArrayList<String>();
     List<String> ArrGia = new ArrayList<String>();
     List<String> ArrImgUrl = new ArrayList<String>();
-    List<String> ArrIDMon = new ArrayList<String>();
+    List<String> ArrIdorder = new ArrayList<String>();
     List<String> ArrIDTable = new ArrayList<String>();
     List<CartGetSetListView> listtao = new ArrayList<CartGetSetListView>();
     CartArrayAdapter myadapter;
@@ -56,13 +57,13 @@ public class CartActivity extends AppCompatActivity {
         listViewMon.setAdapter(myadapter);
 
         listViewMon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public String variable;
+            public String variable,idorder;
 
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long l) {
                 CartGetSetListView o = (CartGetSetListView) adapterView.getItemAtPosition(position);
                 variable = o.getTenmon().toString();
-
+                idorder = o.getIdmon().toString();
                 //Toast.makeText(CartActivity.this, variable + "" + position, Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(
@@ -70,7 +71,8 @@ public class CartActivity extends AppCompatActivity {
                 // Setting Dialog Title
                 alertDialog.setTitle("XÓA MÓN");
                 // Setting Dialog Message
-                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]" + String.valueOf(position) + " khỏi giỏ hàng?");
+//                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]" + String.valueOf(position) + " khỏi giỏ hàng?");
+                alertDialog.setMessage("Bạn có muốn xóa " + "[" + variable + "]"+ " khỏi giỏ hàng?");
                 // Setting Icon to Dialog
                 alertDialog.setIcon(R.drawable.warning);
                 // Setting Positive "Yes" Button
@@ -99,26 +101,31 @@ public class CartActivity extends AppCompatActivity {
                                 c.close();
                                 //===========================
 
-                                db.delete_order("tbl_order", String.valueOf(position));
-                                Cursor c1 = db.getdata("select * from tbl_order");
-                                int count1 = c1.getCount();
-                                //cap nhat lai gia tri cho cot ID_Temp
+                                db.delete_row("tbl_order", "ID_",idorder);
+//                                db.delete_order("tbl_order", String.valueOf(position));
+//                                Cursor c1 = db.getdata("select * from tbl_order");
+//                                int count1 = c1.getCount();
+//                                //cap nhat lai gia tri cho cot ID_Temp
+//
+//                                if (c1.moveToFirst()) {
+//                                    int n = 0;
+//                                    while (!c1.isAfterLast()) {
+//                                        // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
+//                                        if (n > position) {
+//                                            db.querydata("update tbl_order set ID_temp= '" + (n - 1) + "' where ID_temp ='" + n + "'");
+//                                            c1.moveToNext();
+//                                        }
+//                                        n++;
+//                                    }
+//                                }
+//
+//
+//                                c1.close();
+//                                db.close();
 
-                                if (c1.moveToFirst()) {
-                                    int n = 0;
-                                    while (!c1.isAfterLast()) {
-                                        // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
-                                        if (n > position) {
-                                            db.querydata("update tbl_order set ID_temp= '" + (n - 1) + "' where ID_temp ='" + n + "'");
-                                            c1.moveToNext();
-                                        }
-                                        n++;
-                                    }
-                                }
+//                                Xoa 1 dong theo
 
 
-                                c1.close();
-                                db.close();
 
                             }
                         });
@@ -162,6 +169,7 @@ public class CartActivity extends AppCompatActivity {
 
                 // Toast.makeText(BookActivity.this, cur.getString(cur.getColumnIndex("TenMon")), Toast.LENGTH_SHORT).show();
                 ArrTenmon.add(curs.getString(curs.getColumnIndex("TenMon")));
+                ArrIdorder.add(curs.getString(curs.getColumnIndex("ID_")));
                 curs.moveToNext();
 
             }
@@ -179,7 +187,7 @@ public class CartActivity extends AppCompatActivity {
 
         for (int i = 0; i < cc; i++) {
 
-            listtao.add(new CartGetSetListView(ArrImgUrl.get(i), ArrTenmon.get(i), ArrGia.get(i), "delete1"));
+            listtao.add(new CartGetSetListView(ArrImgUrl.get(i), ArrTenmon.get(i), ArrIdorder.get(i), ArrGia.get(i), "delete1"));
             // myadapter.setNotifyOnChange(true);
         }
         curs.close();

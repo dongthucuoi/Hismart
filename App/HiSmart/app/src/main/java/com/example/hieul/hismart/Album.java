@@ -1,10 +1,10 @@
 package com.example.hieul.hismart;
 
 /**
- * Created by Lincoln on 25/10/17.
+ * Created by hieul on 25/10/17.
  */
 public class Album {
-    private String id_table;
+
     private String id;
     private String name;
     private String gia;
@@ -15,24 +15,15 @@ public class Album {
     public Album() {
     }
 
-    public Album(String id_table, String id, String name, String gias, String thumbnail, String url) {
+    public Album( String id, String name, String gias, String thumbnail, String url) {
 
-        this.id_table = id_table;
+
         this.id = id;
         this.name = name;
         this.gia = gias;
         this.thumbnail = thumbnail;
         this.url = url;
 
-
-    }
-
-    public String getId_table() {
-        return id_table;
-    }
-
-    public void setId_table(String id_table) {
-        this.id_table = id_table;
     }
 
     public String getId() {

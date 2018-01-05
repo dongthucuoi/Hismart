@@ -7,9 +7,10 @@
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
     android:focusableInTouchMode="false"
-
-
     android:orientation="horizontal"
+
+
+    android:touchscreenBlocksFocus="true"
     android:weightSum="10"
 
     >
@@ -21,12 +22,11 @@
         android:layout_gravity="center"
         android:layout_weight="3"
 
+        android:clickable="true"
+        android:focusable="false"
         android:gravity="center"
         android:orientation="horizontal"
         android:touchscreenBlocksFocus="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
 
         >
 
@@ -36,24 +36,16 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:focusable="false"
-            android:focusableInTouchMode="true"
-            android:focusedByDefault="true"
-            android:scaleType="centerInside"
-            android:touchscreenBlocksFocus="true" />
+
+
+            android:scaleType="centerInside" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:layout_weight="6"
-        android:focusable="true"
         android:orientation="vertical"
-
-        android:padding="2dp"
-
         android:weightSum="10">
 
         <HorizontalScrollView
@@ -63,14 +55,14 @@
 
             <TextView
                 android:id="@+id/tenMon"
-                android:textColor="#0033ff"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
-                android:textStyle="bold"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="thit ga" />
+                android:text="thit ga"
+                android:textColor="#0033ff"
+                android:textStyle="bold" />
 
         </HorizontalScrollView>
 
@@ -98,10 +90,10 @@
 
             <TextView
                 android:id="@+id/idmon"
-                android:text="idmon"
-                android:visibility="invisible"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="idmon"
+                android:visibility="invisible" />
         </HorizontalScrollView>
 
     </LinearLayout>
@@ -111,7 +103,6 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"

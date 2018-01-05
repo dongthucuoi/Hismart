@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hieul.hismart">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,7 +19,9 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon1"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="AllowBackup">
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -26,8 +29,10 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".BookActivity" />
         <activity
@@ -38,6 +43,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BookActivity" />
+        </activity>
+        <activity
+            android:name=".ThanhtoanActivity"
+            android:label="...Xác nhận thanh toán..."
+            android:parentActivityName=".BookActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BookActivity" />
+
 
         </activity>
     </application>

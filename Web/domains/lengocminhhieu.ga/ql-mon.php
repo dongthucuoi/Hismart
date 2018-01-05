@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/mycss.css">
     <script type="text/javascript" src="js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="css/boostrap.css">
-    <script type="text/javascript" src="js/js.js"></script>
+    <script type="text/javascript" src="js/qlmon.js"></script>
 
 
   </head>
@@ -19,8 +19,8 @@
       <?php
         include ('module/header.php');
         ?>
-        <div>
-          <?php include ('module/menu.php'); ?>
+        <div class="div-menu">
+          <?php $page="ql-mon"; include ('module/menu.php'); ?>
         </div>
         <div class="col-md-4 col-md-offset-4">
           <button id="btthem" onclick="document.getElementById('modal_themmon').style.display='block'" > <strong>Thêm món</strong></button>
@@ -28,7 +28,8 @@
         <table style="width:100%;">
       <tr>
         <!-- <th>ID</th> -->
-        <th style="width:40%;">Tên món</th>
+        <th style="width:5%;">STT</th>
+        <th style="width:35%;">Tên món</th>
         <th style="width:20%;">Hình</th>
         <th style="width:20%;">Giá</th>
         <th style="width:20%;">Hành động</th>
@@ -36,6 +37,7 @@
 
       <?php
       $tblmon = mysql_query("select * from tbl_mon");
+      $stt=0;
         if(mysql_num_rows($tblmon) == 0)
         {
            echo "No data";
@@ -48,6 +50,7 @@
 
       <tr>
         <!-- <td><?php echo $row["ID"]; ?></td> -->
+        <td style="font-weight:bold; color:#1A3A66;  padding-left:10px;"><?php echo $stt+=1; ?></td>
         <td style="font-weight:bold; color:#1A3A66;  padding-left:10px;"><?php echo $row["TenMon"]; ?></td>
         <td style="padding:10px;"><center> <img src="<?php echo $row["ImgUrl"]; ?>" alt="" width="80" height="80"></center></td>
         <td style="text-align:right;font-weight:bold; color:red; font-size:18px; padding-right:10px;"><?php echo $row["Gia"]." VNĐ"; ?></td>

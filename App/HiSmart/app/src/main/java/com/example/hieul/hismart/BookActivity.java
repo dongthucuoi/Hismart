@@ -23,6 +23,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,22 +39,24 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AlbumsAdapter adapter;
     private List<Album> albumList;
+
     public final boolean tt_thanhtoan = false;
-    String booking = "http://lengocminhhieu.ga/App/KH_booking.php";
+    String booking = "http://lengocminhhieu.ga/App/dsmon.php";
     public String IDmon;
     public String IDcuahang;
     public String Tenmon;
     public String Gia;
     public String Imgurl;
     Db db = new Db(this);
-    String ImageArray[];
-    String DSmon[];
+
     List<String> ArrTenmon = new ArrayList<String>();
     List<String> ArrGia = new ArrayList<String>();
     List<String> ArrImgLocal = new ArrayList<String>();
@@ -61,14 +64,13 @@ public class BookActivity extends AppCompatActivity {
     List<String> ArrIDMon = new ArrayList<String>();
     List<String> ArrIDTable = new ArrayList<String>();
     ImageView image;
-    String URL1 = "http://hoatuoi360.vn/uploads/file/co-nen-tang-hoa-cho-nguoi-yeu-cu-trong-ngay-sinh-nhat.jpg";
     String folder_main = "hismart/hinhmon";
     File fileloc = new File(Environment.getExternalStorageDirectory(), folder_main);
     Boolean tt = false;
     public static boolean check = false;
     Dialog customProgress;
-    SwipeRefreshLayout mSwipeRefreshLayout;
-//    ProgressDialog mProgressDialog = new ProgressDialog(BookActivity.this);
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,7 @@ public class BookActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_book);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+
         this.setFinishOnTouchOutside(true);
         image = (ImageView) findViewById(R.id.thumbnail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -88,7 +90,7 @@ public class BookActivity extends AppCompatActivity {
         albumList = new ArrayList<>();
         adapter = new AlbumsAdapter(this, albumList);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        final RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(5), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -111,6 +113,7 @@ public class BookActivity extends AppCompatActivity {
 
                 } else {
                     // chưa thanh toán
+
                     Intent m = new Intent(BookActivity.this, CartActivity.class);
                     startActivity(m);
                 }
@@ -121,24 +124,10 @@ public class BookActivity extends AppCompatActivity {
 // SWIPE DOWN PROCESS
 
 
-//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//
-//                //Define your task here .
-//                LoadDtaWeb();
-//                if (tt = true) {
-//                    mSwipeRefreshLayout.setRefreshing(false);
-//                    tt = false;
-//                }
-//            }
-//        });
-
 //        // lay csdl tu web
         LoadDtaWeb();
         // tao bang tbl_order
-        db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp text, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book tex not null)");
+        db.querydata("Create table if not exists tbl_order (ID_ integer primary key, IDCH_book integer not null, IDmon_book integer not null, TT_tt text not null)");
         db.close();
     }
 
@@ -166,6 +155,7 @@ public class BookActivity extends AppCompatActivity {
                 }
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbar.setTitle("Chọn Món");
+
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
@@ -225,7 +215,7 @@ public class BookActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (tt_thanhtoan) {
+
 
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(
@@ -247,22 +237,6 @@ public class BookActivity extends AppCompatActivity {
                     });
             alertDialog.show();
 
-        } else {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                    BookActivity.this);
-            alertDialog.setTitle("WARNING!!!");
-            alertDialog.setMessage("Bạn phải thanh toán trước khi thoát ứng dụng");
-            alertDialog.setIcon(R.drawable.icon1);
-            alertDialog.setPositiveButton("Tôi Biết Rồi",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-            alertDialog.show();
-        }
-
     }
 
     public void LoadDtaWeb() {
@@ -272,8 +246,12 @@ public class BookActivity extends AppCompatActivity {
         int count = c.getCount();
 
 
+// getdata web
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, booking,
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, booking,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -283,25 +261,24 @@ public class BookActivity extends AppCompatActivity {
                         } else
 
                             try {
+
+
                                 JSONObject jsonRootObject = new JSONObject(response);
                                 JSONArray jsonArray = jsonRootObject.optJSONArray("DSMON");
+
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     boolean check = false;
-                                    IDmon = jsonObject.optString("ID").toString();
-                                    IDcuahang = jsonObject.optString("IDCH").toString();
-                                    Tenmon = jsonObject.optString("TenMon").toString();
-                                    Gia = jsonObject.optString("Gia").toString();
-                                    Imgurl = jsonObject.optString("ImgUrl").toString();
+                                    IDmon = jsonObject.optString("ID");
+                                    IDcuahang = jsonObject.optString("IDCH");
+                                    Tenmon = jsonObject.optString("TenMon");
+                                    Gia = jsonObject.optString("Gia");
+                                    Imgurl = jsonObject.optString("ImgUrl");
                                     String imgname = Imgurl.substring(Imgurl.lastIndexOf("/") + 1);
-
 //=========================================================================================================
-                                    //   String abc = MainActivity.resultQR.getContents();
-                                    //temp (
-                                    String abc = "1";
-                                    //    )temp
 
-                                    Album a = new Album(abc, IDmon, Tenmon, Gia, imgname, Imgurl);
+
+                                    Album a = new Album(IDmon, Tenmon, Gia, imgname, Imgurl);
                                     albumList.add(a);
                                     adapter.notifyDataSetChanged();
                                     Cursor ds = db.getdata("select * from tbl_mon_app");
@@ -341,9 +318,19 @@ public class BookActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Lỗi", "Lỗi" + "\n" + error.toString());
                     }
-                }
-        );
+
+
+                }) {
+
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("id_ban", MainActivity.resultQR.getContents());
+//                return params;
+//            }
+        };
         requestQueue.add(stringRequest);
+// pos
 
 
         // Cursor cur = db.getdata("select * from tbl_mon_app");

@@ -5,5 +5,5 @@
     <string name="action_play_next">Đặt món</string>
     <string name="backdrop_title">Hi Smart</string>
     <string name="backdrop_subtitle">Rất hân hạnh được phục vụ quý khách</string>
-    <string name="title_activity_test_button_show">TestButtonShow</string>
+    <string name="tong">Tổng cộng: </string>
 </resources>

@@ -33,12 +33,12 @@ public class Db extends SQLiteOpenHelper {
     }
 
 
-    public void delete_order(String table_name, String id) {
+    public void delete_table(String table_name) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("delete from " + table_name + " where ID_temp ='" + id + "'");
+        db.execSQL("delete from " + table_name);
     }
 
-    public void delete_row(String tenbang, String tencot , String giatri) {
+    public void delete_row(String tenbang, String tencot, String giatri) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(tenbang, tencot + "=" + giatri, null);
     }

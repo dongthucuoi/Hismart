@@ -2,11 +2,13 @@ package com.example.hieul.hismart;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ravi Tamada on 18/05/16.
@@ -35,6 +45,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     File fileloc = new File(Environment.getExternalStorageDirectory(), folder_main);
     String IDCH = "1";
     SwipeRefreshLayout swipeContainer;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count;
@@ -87,8 +98,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
             @Override
 
             public void onClick(View view) {
+
+
                 Db db = new Db(view.getContext());
-                db.querydata("Create table if not exists tbl_order (ID_ integer primary key, ID_temp text, IDCH_book integer not null, ID_table integer not null, IDmon_book integer not null, TT_tt text not null, Datetime_book text not null)");
+                db.querydata("Create table if not exists tbl_order (ID_ integer primary key, IDCH_book integer not null, IDmon_book integer not null, TT_tt text not null)");
                 Cursor tb_or = db.getdata("select * from tbl_order");
 
                 Date currentTime = Calendar.getInstance().getTime();
@@ -99,7 +112,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
                 for (int i = 0; i <= position; i++) {
 
                     if (i == position) {
-                        db.querydata("insert into tbl_order values(null, null,'" + IDCH + "','" + alb.getId_table() + "','" + alb.getId() + "','" + "0" + "','" + currentTime.toString() + "')");
+                        db.querydata("insert into tbl_order values(null, '" + IDCH + "','" + alb.getId() + "','" + "0" + "')");
                         Toast.makeText(mContext, "Đã thêm " + alb.getName() + " vào giỏ hàng", Toast.LENGTH_SHORT).show();
                         break;
                     }

@@ -10,8 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9">
-
+        android:layout_weight="10">
 
         <ListView
             android:id="@+id/lvmon"
@@ -24,10 +23,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="50dp"
+        android:clickable="false"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:padding="7dp"
-        android:weightSum="10">
+        android:weightSum="10"
+
+
+        >
 
         <Button
             android:id="@+id/thanhtoan"
@@ -37,7 +42,8 @@
             android:layout_weight="5"
             android:background="@drawable/custombutton"
             android:text="Thanh Toán"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+             />
 
         <Button
             android:id="@+id/goimon"
@@ -45,10 +51,14 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:background="@drawable/custombutton"
-            android:text="Gọi món"
-            android:textColor="#ffffff" />
+            android:text="Gọi Món"
+            android:textColor="#ffffff"
+
+
+
+            />
+
 
     </LinearLayout>
-
 
 </LinearLayout>

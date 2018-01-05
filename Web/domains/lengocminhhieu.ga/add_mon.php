@@ -2,10 +2,6 @@
 <?php
   include ('connect.php');
 
-
-
-if ($_POST['them']= "them") {
-
 $IDCH =$_POST['IDCH'];
 $TenMon=$_POST['TenMon'];
 $Gia=$_POST['Gia'];
@@ -20,12 +16,5 @@ else echo"Thêm thất bại";
 
 // print(json_encode($flag));
 mysql_close($con);
-
-
-}
-
-
-
-
 
 ?>
